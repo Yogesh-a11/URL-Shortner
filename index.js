@@ -3,9 +3,12 @@ import dotenv from 'dotenv'
 import { connectToDB } from './db/connectDB.js'
 import URL from './models/urlModel.js'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 import staticRouter from './routes/staticRouter.js'
 import urlRoute from './routes/urlRoute.js'
 import userRoute from './routes/userRoutes.js'
+import { checkAuth } from './middlewares/authMiddleware.js'
+
 dotenv.config()
 
 const app = express()
@@ -15,10 +18,11 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.set('view engine', 'ejs')
+app.use(cookieParser())
 app.set('views', path.resolve('./views'))
 
 app.use('/url', urlRoute)
-app.use('/', staticRouter)
+app.use('/', checkAuth, staticRouter)
 app.use('/user', userRoute)
 
 // app.get('/test', async(req, res) => {

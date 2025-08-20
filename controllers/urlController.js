@@ -17,7 +17,8 @@ export const handleGenerateNewShortURL = async (req, res) => {
     await URL.create({
         shortId: shortId,
         redirectURL: url,
-        visitHistory: []
+        visitHistory: [],
+        createdBy: req.user._id
     })
 
     res.redirect('/')

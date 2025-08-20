@@ -1,4 +1,6 @@
 import User from "../models/userModel.js"
+import {v4 as uuidv4} from 'uuid'
+import { getUser, setUser } from "../service/authService.js"
 
 export const handleUserSignup = async(req, res) => {
     const { name, email, password } = req.body
@@ -26,5 +28,8 @@ export const handleUserLogin = async(req, res) => {
 
     }
 
+    const sessionId = uuidv4()
+    setUser(sessionId, user)
+    res.cookie('uuid', sessionId)
     return res.redirect('/')
 }
