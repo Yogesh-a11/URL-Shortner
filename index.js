@@ -1,10 +1,11 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import urlRoute from './routes/urlRoute.js'
 import { connectToDB } from './db/connectDB.js'
 import URL from './models/urlModel.js'
 import path from 'path'
 import staticRouter from './routes/staticRouter.js'
+import urlRoute from './routes/urlRoute.js'
+import userRoute from './routes/userRoutes.js'
 dotenv.config()
 
 const app = express()
@@ -18,6 +19,7 @@ app.set('views', path.resolve('./views'))
 
 app.use('/url', urlRoute)
 app.use('/', staticRouter)
+app.use('/user', userRoute)
 
 // app.get('/test', async(req, res) => {
 //     const allUrls = await URL.find({})
